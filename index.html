@@ -1,24 +1,21 @@
 
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#087f5b">
+<title>Jitu Live Sports</title>
 
 <script>
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js")
-      .catch(error => console.log(error));
-  });
+ window.addEventListener("load", () => {
+  navigator.serviceWorker.register("./sw.js")
+   .catch(error => console.log(error));
+ });
 }
 </script>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#071526">
-<title>Jitu Live Sports</title>
 
 <style>
 *{box-sizing:border-box}
@@ -56,8 +53,6 @@ button,.btn{
  display:inline-block;font-weight:bold
 }
 .blue{background:#2563eb}
-.gray{background:#475569}
-.tabs{display:flex;gap:5px;flex-wrap:wrap}
 .match{
  background:#20364c;padding:13px;
  margin:10px 0;border-radius:9px;
@@ -85,7 +80,7 @@ a{color:#70d6ff}
 <a href="#live">Live Score</a>
 <a href="#upcoming">Upcoming</a>
 <a href="#results">Results</a>
-<a href="#watch">Watch</a>
+<a href="#watch">Watch Live</a>
 </nav>
 
 <div class="container">
@@ -123,11 +118,28 @@ a{color:#70d6ff}
 <button onclick="loadAll()">Refresh Now</button>
 </section>
 
+<!-- WATCH LIVE CRICKET -->
 <section class="box" id="watch">
-<h2>📺 Official Cricket Websites</h2>
-<p>मैच का प्रसारण उपलब्धता और अधिकारों पर निर्भर करता है।</p>
-<a class="btn blue" href="https://www.bcci.tv/" target="_blank" rel="noopener">BCCI</a>
-<a class="btn blue" href="https://www.icc-cricket.com/" target="_blank" rel="noopener">ICC</a>
+<h2>📺 WATCH LIVE CRICKET</h2>
+<p>लाइव क्रिकेट देखने के लिए आधिकारिक प्लेटफॉर्म खोलें। प्रसारण मैच और देश के अनुसार उपलब्ध हो सकता है।</p>
+
+<a class="btn blue"
+href="https://www.hotstar.com/"
+target="_blank" rel="noopener">
+▶ JioHotstar पर देखें
+</a>
+
+<a class="btn blue"
+href="https://www.icc-cricket.com/"
+target="_blank" rel="noopener">
+ICC Official
+</a>
+
+<a class="btn blue"
+href="https://www.bcci.tv/"
+target="_blank" rel="noopener">
+BCCI Official
+</a>
 </section>
 
 <section class="box">
@@ -139,7 +151,7 @@ a{color:#70d6ff}
 <section class="box">
 <h2>📞 Contact</h2>
 <p>Jitu Live Sports</p>
-<p>India 🇮🇳</p>
+<p>India</p>
 </section>
 
 </div>
@@ -150,7 +162,7 @@ a{color:#70d6ff}
 Data provided by
 <a href="https://sportscore.com/" target="_blank" rel="noopener">SportScore</a>
 </p>
-<p>Made in India ❤️</p>
+<p>Made in India</p>
 </footer>
 
 <script>
@@ -175,14 +187,23 @@ function getValue(m,...keys){
  return "";
 }
 
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#39;"
+ })[c]);
+}
+
 function matchHTML(m){
  const home = getValue(m,"home","home_team","home_name") || "Team 1";
  const away = getValue(m,"away","away_team","away_name") || "Team 2";
  const hs = getValue(m,"home_score");
  const as = getValue(m,"away_score");
+
  const score = hs !== "" || as !== ""
-  ? `<div class="score">${hs || "–"} : ${as || "–"}</div>`
+  ? `<div class="score">${escapeHTML(hs || "–")} : ${escapeHTML(as || "–")}</div>`
   : "";
+
  const status = getValue(m,"status_text","status") || "Match update";
  const competition = getValue(m,"competition","league","tournament") || "";
  const time = getValue(m,"time","date","start_time") || "";
@@ -194,13 +215,6 @@ function matchHTML(m){
  <div class="small">${escapeHTML(competition)}</div>
  <div class="small">${escapeHTML(time)}</div>
  </div>`;
-}
-
-function escapeHTML(value){
- return String(value).replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",
- '"':"&quot;","'":"&#39;"
- })[c]);
 }
 
 async function getJSON(url){
@@ -231,22 +245,26 @@ async function loadAll(){
   );
 
   const liveMatches = matchesFrom(liveData);
+
   liveBox.innerHTML = liveMatches.length
    ? liveMatches.map(matchHTML).join("")
    : `<div class="empty">${language==="hi"?"अभी कोई मैच उपलब्ध नहीं है।":"No matches available."}</div>`;
 
   document.getElementById("liveStatus").innerText =
-   language==="hi"?"स्कोर सफलतापूर्वक अपडेट हुआ":"Scores updated successfully";
+   language==="hi"?"स्कोर अपडेट हुआ":"Scores updated";
 
  }catch(error){
-  liveBox.innerHTML = `<div class="empty">Live score अभी उपलब्ध नहीं है। थोड़ी देर बाद Refresh करें।</div>`;
-  document.getElementById("liveStatus").innerText = "API connection unavailable";
+  liveBox.innerHTML =
+   `<div class="empty">Live score अभी उपलब्ध नहीं है। थोड़ी देर बाद Refresh करें।</div>`;
+  document.getElementById("liveStatus").innerText =
+   "API connection unavailable";
  }
 
  try{
   const upcoming = await Promise.all(
    Array.from({length:7},(_,i)=>getFixtures(i,"upcoming"))
   );
+
   const allUpcoming = upcoming.flat();
   const uniqueUpcoming = [...new Map(
    allUpcoming.map((m,i)=>[m.slug || m.id || i,m])
@@ -254,15 +272,18 @@ async function loadAll(){
 
   upBox.innerHTML = uniqueUpcoming.length
    ? uniqueUpcoming.slice(0,20).map(matchHTML).join("")
-   : `<div class="empty">आज से अगले 7 दिनों के मैच उपलब्ध नहीं हैं।</div>`;
+   : `<div class="empty">अगले 7 दिनों के मैच उपलब्ध नहीं हैं।</div>`;
+
  }catch(error){
-  upBox.innerHTML = `<div class="empty">Upcoming matches लोड नहीं हो सके।</div>`;
+  upBox.innerHTML =
+   `<div class="empty">Upcoming matches लोड नहीं हो सके।</div>`;
  }
 
  try{
   const results = await Promise.all(
    Array.from({length:4},(_,i)=>getFixtures(-i,"finished"))
   );
+
   const allResults = results.flat();
   const uniqueResults = [...new Map(
    allResults.map((m,i)=>[m.slug || m.id || i,m])
@@ -271,8 +292,10 @@ async function loadAll(){
   resultBox.innerHTML = uniqueResults.length
    ? uniqueResults.slice(0,20).map(matchHTML).join("")
    : `<div class="empty">अभी परिणाम उपलब्ध नहीं हैं।</div>`;
+
  }catch(error){
-  resultBox.innerHTML = `<div class="empty">Results लोड नहीं हो सके।</div>`;
+  resultBox.innerHTML =
+   `<div class="empty">Results लोड नहीं हो सके।</div>`;
  }
 
  document.getElementById("updateText").innerText =
@@ -306,4 +329,3 @@ setInterval(loadAll,300000);
 
 </body>
 </html>
-
