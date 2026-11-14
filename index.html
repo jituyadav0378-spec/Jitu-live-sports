@@ -1,131 +1,295 @@
 
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071b2d">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071526">
 <title>Jitu Live Sports</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#071321;color:white;font-family:Arial,sans-serif}
-header{background:#087f5b;padding:22px;text-align:center;font-size:27px;font-weight:bold}
-nav{background:#102338;padding:12px;text-align:center}
-button{padding:11px 15px;border:0;border-radius:8px;background:#14c88b;color:#071321;font-weight:bold;margin:4px}
-main{max-width:900px;margin:auto;padding:12px}
-.box{background:#102338;margin:14px 0;padding:20px;border-radius:13px;border:1px solid #25445e}
+body{
+ margin:0;background:#071526;color:white;
+ font-family:Arial,sans-serif
+}
+header{
+ background:#087f5b;padding:20px 10px;
+ text-align:center;font-size:25px;font-weight:bold
+}
+nav{
+ display:flex;justify-content:center;flex-wrap:wrap;
+ gap:8px;background:#10243a;padding:12px
+}
+nav a{
+ color:white;text-decoration:none;background:#203b52;
+ padding:10px;border-radius:7px;font-size:14px
+}
+.container{max-width:950px;margin:auto;padding:14px}
+.hero{
+ background:linear-gradient(130deg,#087f5b,#123b64);
+ padding:25px 12px;text-align:center;border-radius:14px
+}
+.hero h1{font-size:27px}
+.box{
+ background:#13283e;padding:17px;margin:15px 0;
+ border-radius:12px;border:1px solid #29445e
+}
 h2{color:#38d9a9}
-p{line-height:1.6;color:#cbd5e1}
-.match{background:#19364e;padding:15px;margin:10px 0;border-radius:10px}
-.score{font-size:22px;font-weight:bold;text-align:center}
-footer{text-align:center;padding:25px;color:#aaa}
-a{color:#7dd3fc}
+button,.btn{
+ border:0;background:#08a878;color:white;
+ padding:11px 15px;border-radius:7px;
+ margin:4px;cursor:pointer;text-decoration:none;
+ display:inline-block;font-weight:bold
+}
+.blue{background:#2563eb}
+.gray{background:#475569}
+.tabs{display:flex;gap:5px;flex-wrap:wrap}
+.match{
+ background:#20364c;padding:13px;
+ margin:10px 0;border-radius:9px;
+ border-left:4px solid #08a878
+}
+.match h3{margin:5px 0;color:#fff}
+.score{font-size:20px;font-weight:bold;color:#38d9a9}
+.small{font-size:12px;color:#b9c9d9}
+.status{color:#fbbf24;font-size:13px}
+.empty{text-align:center;padding:20px;color:#cbd5e1}
+footer{
+ background:#10243a;text-align:center;
+ padding:25px;color:#cbd5e1;margin-top:25px
+}
+a{color:#70d6ff}
 </style>
 </head>
+
 <body>
 
 <header>🏏 JITU LIVE SPORTS</header>
 
 <nav>
-<button onclick="setLang('hi')">हिंदी</button>
-<button onclick="setLang('en')">English</button>
+<a href="#home">Home</a>
+<a href="#live">Live Score</a>
+<a href="#upcoming">Upcoming</a>
+<a href="#results">Results</a>
+<a href="#watch">Watch</a>
 </nav>
 
-<main>
-<div class="box">
-<h2 id="welcome">स्वागत है!</h2>
-<p id="intro">आपका अपना स्पोर्ट्स प्लेटफॉर्म।</p>
+<div class="container">
+
+<section class="hero" id="home">
+<h1>Jitu Live Sports 🏆</h1>
+<p id="welcome">आपका अपना क्रिकेट स्पोर्ट्स प्लेटफॉर्म</p>
+<p>Live Cricket | Scores | Matches | Results</p>
+<button onclick="changeLanguage()" id="langBtn">English</button>
+</section>
+
+<section class="box" id="live">
+<h2 id="liveTitle">🔴 लाइव क्रिकेट स्कोर</h2>
+<p id="liveStatus">मैच की जानकारी लोड हो रही है...</p>
+<div id="liveMatches"></div>
+</section>
+
+<section class="box" id="upcoming">
+<h2 id="upTitle">📅 आने वाले मैच</h2>
+<div id="upMatches">
+<div class="empty">मैच लोड हो रहे हैं...</div>
+</div>
+</section>
+
+<section class="box" id="results">
+<h2 id="resultTitle">🏆 पिछले मैचों के परिणाम</h2>
+<div id="resultMatches">
+<div class="empty">परिणाम लोड हो रहे हैं...</div>
+</div>
+</section>
+
+<section class="box">
+<h2>🔄 Update</h2>
+<p id="updateText">स्कोर हर 5 मिनट में अपडेट होगा।</p>
+<button onclick="loadAll()">Refresh Now</button>
+</section>
+
+<section class="box" id="watch">
+<h2>📺 Official Cricket Websites</h2>
+<p>मैच का प्रसारण उपलब्धता और अधिकारों पर निर्भर करता है।</p>
+<a class="btn blue" href="https://www.bcci.tv/" target="_blank" rel="noopener">BCCI</a>
+<a class="btn blue" href="https://www.icc-cricket.com/" target="_blank" rel="noopener">ICC</a>
+</section>
+
+<section class="box">
+<h2>ℹ️ About Us</h2>
+<p>Jitu Live Sports पर क्रिकेट स्कोर, मैच अपडेट,
+आने वाले मैच और परिणाम देखने की सुविधा उपलब्ध है।</p>
+</section>
+
+<section class="box">
+<h2>📞 Contact</h2>
+<p>Jitu Live Sports</p>
+<p>India 🇮🇳</p>
+</section>
+
 </div>
 
-<div class="box">
-<h2>🔴 LIVE CRICKET SCORES</h2>
-<button onclick="loadScores()">↻ Refresh Score</button>
-<div id="scores">Loading cricket scores...</div>
-</div>
-
-<div class="box">
-<h2>📅 UPCOMING MATCHES</h2>
-<div id="upcoming">मैच की जानकारी लोड हो रही है...</div>
-</div>
-
-<div class="box">
-<h2>📺 OFFICIAL LIVE MATCH</h2>
-<p>मैच देखने के लिए अधिकृत ब्रॉडकास्टर की वेबसाइट या ऐप खोलें।</p>
-<a href="https://www.icc-cricket.com/" target="_blank">ICC Official Website</a>
-<br><br>
-<a href="https://www.bcci.tv/" target="_blank">BCCI Official Website</a>
-</div>
-</main>
-
-<footer>Jitu Live Sports © 2026</footer>
+<footer>
+<p>Jitu Live Sports © 2026</p>
+<p>
+Data provided by
+<a href="https://sportscore.com/" target="_blank" rel="noopener">SportScore</a>
+</p>
+<p>Made in India ❤️</p>
+</footer>
 
 <script>
-const API="https://sportscore.com";
+const API = "https://sportscore.com";
+let language = "hi";
 
-function setLang(lang){
- if(lang==="en"){
-  document.getElementById("welcome").innerText="Welcome!";
-  document.getElementById("intro").innerText="Your own sports platform.";
- }else{
-  document.getElementById("welcome").innerText="स्वागत है!";
-  document.getElementById("intro").innerText="आपका अपना स्पोर्ट्स प्लेटफॉर्म।";
- }
+function matchesFrom(data){
+ return data.matches || data.fixtures || data.data || [];
 }
 
-async function loadScores(){
- const box=document.getElementById("scores");
- box.innerHTML="Loading...";
+function dateString(offset){
+ const d = new Date();
+ d.setUTCDate(d.getUTCDate()+offset);
+ return d.toISOString().slice(0,10);
+}
+
+function getValue(m,...keys){
+ for(const key of keys){
+  if(m[key] !== undefined && m[key] !== null)
+   return m[key];
+ }
+ return "";
+}
+
+function matchHTML(m){
+ const home = getValue(m,"home","home_team","home_name") || "Team 1";
+ const away = getValue(m,"away","away_team","away_name") || "Team 2";
+ const hs = getValue(m,"home_score");
+ const as = getValue(m,"away_score");
+ const score = hs !== "" || as !== ""
+  ? `<div class="score">${hs || "–"} : ${as || "–"}</div>`
+  : "";
+ const status = getValue(m,"status_text","status") || "Match update";
+ const competition = getValue(m,"competition","league","tournament") || "";
+ const time = getValue(m,"time","date","start_time") || "";
+
+ return `<div class="match">
+ <h3>${escapeHTML(home)} 🆚 ${escapeHTML(away)}</h3>
+ ${score}
+ <div class="status">${escapeHTML(status)}</div>
+ <div class="small">${escapeHTML(competition)}</div>
+ <div class="small">${escapeHTML(time)}</div>
+ </div>`;
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",
+ '"':"&quot;","'":"&#39;"
+ })[c]);
+}
+
+async function getJSON(url){
+ const response = await fetch(url);
+ if(!response.ok) throw new Error("API error "+response.status);
+ return response.json();
+}
+
+async function getFixtures(offset,status){
+ const url = API+"/api/v1/fixtures/?sport=cricket"
+  +"&date="+dateString(offset)
+  +"&status="+status+"&limit=100";
+ const data = await getJSON(url);
+ return matchesFrom(data);
+}
+
+async function loadAll(){
+ const liveBox = document.getElementById("liveMatches");
+ const upBox = document.getElementById("upMatches");
+ const resultBox = document.getElementById("resultMatches");
+
+ document.getElementById("liveStatus").innerText =
+  language==="hi"?"मैच लोड हो रहे हैं...":"Loading matches...";
+
  try{
-  const response=await fetch(API+"/api/widget/matches/?sport=cricket&limit=30");
-  if(!response.ok)throw new Error("API unavailable");
-  const data=await response.json();
-  const matches=data.matches||[];
-  if(matches.length===0){
-   box.innerHTML="अभी कोई मैच उपलब्ध नहीं है।";
-   return;
-  }
-  box.innerHTML=matches.map(m=>`
-   <div class="match">
-    <b>${m.home||m.home_team||"Team 1"}</b>
-    <div class="score">
-     ${m.home_score??"-"} - ${m.away_score??"-"}
-    </div>
-    <b>${m.away||m.away_team||"Team 2"}</b>
-    <p>${m.status_text||m.status||""}</p>
-   </div>
-  `).join("");
- }catch(error){
-  box.innerHTML="स्कोर अभी उपलब्ध नहीं है। बाद में फिर कोशिश करें।";
- }
-}
+  const liveData = await getJSON(
+   API+"/api/widget/matches/?sport=cricket&limit=20"
+  );
 
-async function loadUpcoming(){
- const box=document.getElementById("upcoming");
+  const liveMatches = matchesFrom(liveData);
+  liveBox.innerHTML = liveMatches.length
+   ? liveMatches.map(matchHTML).join("")
+   : `<div class="empty">${language==="hi"?"अभी कोई मैच उपलब्ध नहीं है।":"No matches available."}</div>`;
+
+  document.getElementById("liveStatus").innerText =
+   language==="hi"?"स्कोर सफलतापूर्वक अपडेट हुआ":"Scores updated successfully";
+
+ }catch(error){
+  liveBox.innerHTML = `<div class="empty">Live score अभी उपलब्ध नहीं है। थोड़ी देर बाद Refresh करें।</div>`;
+  document.getElementById("liveStatus").innerText = "API connection unavailable";
+ }
+
  try{
-  const response=await fetch(API+"/api/v1/fixtures/?sport=cricket&status=upcoming&limit=20");
-  if(!response.ok)throw new Error("Unavailable");
-  const data=await response.json();
-  const matches=data.matches||data.fixtures||data.data||[];
-  if(!matches.length){
-   box.innerHTML="आने वाले मैचों का डेटा अभी उपलब्ध नहीं है।";
-   return;
-  }
-  box.innerHTML=matches.map(m=>`
-   <div class="match">
-    <b>${m.home||m.home_team||"Team 1"}</b>
-    vs
-    <b>${m.away||m.away_team||"Team 2"}</b>
-    <p>${m.date||m.start_time||""}</p>
-   </div>
-  `).join("");
+  const upcoming = await Promise.all(
+   Array.from({length:7},(_,i)=>getFixtures(i,"upcoming"))
+  );
+  const allUpcoming = upcoming.flat();
+  const uniqueUpcoming = [...new Map(
+   allUpcoming.map((m,i)=>[m.slug || m.id || i,m])
+  ).values()];
+
+  upBox.innerHTML = uniqueUpcoming.length
+   ? uniqueUpcoming.slice(0,20).map(matchHTML).join("")
+   : `<div class="empty">आज से अगले 7 दिनों के मैच उपलब्ध नहीं हैं।</div>`;
  }catch(error){
-  box.innerHTML="मैच शेड्यूल अभी उपलब्ध नहीं है।";
+  upBox.innerHTML = `<div class="empty">Upcoming matches लोड नहीं हो सके।</div>`;
  }
+
+ try{
+  const results = await Promise.all(
+   Array.from({length:4},(_,i)=>getFixtures(-i,"finished"))
+  );
+  const allResults = results.flat();
+  const uniqueResults = [...new Map(
+   allResults.map((m,i)=>[m.slug || m.id || i,m])
+  ).values()];
+
+  resultBox.innerHTML = uniqueResults.length
+   ? uniqueResults.slice(0,20).map(matchHTML).join("")
+   : `<div class="empty">अभी परिणाम उपलब्ध नहीं हैं।</div>`;
+ }catch(error){
+  resultBox.innerHTML = `<div class="empty">Results लोड नहीं हो सके।</div>`;
+ }
+
+ document.getElementById("updateText").innerText =
+  "Last checked: "+new Date().toLocaleTimeString();
 }
 
-loadScores();
-loadUpcoming();
-setInterval(loadScores,60000);
+function changeLanguage(){
+ language = language==="hi"?"en":"hi";
+
+ document.getElementById("welcome").innerText =
+  language==="hi"?"आपका अपना क्रिकेट स्पोर्ट्स प्लेटफॉर्म":"Your Cricket Sports Platform";
+
+ document.getElementById("langBtn").innerText =
+  language==="hi"?"English":"हिंदी";
+
+ document.getElementById("liveTitle").innerText =
+  language==="hi"?"🔴 लाइव क्रिकेट स्कोर":"🔴 Live Cricket Scores";
+
+ document.getElementById("upTitle").innerText =
+  language==="hi"?"📅 आने वाले मैच":"📅 Upcoming Matches";
+
+ document.getElementById("resultTitle").innerText =
+  language==="hi"?"🏆 पिछले मैचों के परिणाम":"🏆 Match Results";
+
+ loadAll();
+}
+
+loadAll();
+setInterval(loadAll,300000);
 </script>
 
 </body>
