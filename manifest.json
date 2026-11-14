@@ -1,0 +1,11 @@
+{
+  "name": "Jitu Live Sports",
+  "short_name": "Jitu Sports",
+  "description": "Live Cricket Scores and Match Updates",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071526",
+  "theme_color": "#087f5b",
+  "orientation": "portrait"
+}
